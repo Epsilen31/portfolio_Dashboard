@@ -32,16 +32,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Trash2 } from "lucide-react";
+import { Trash2, Loader } from "lucide-react";
 
 const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Expert"];
-// eslint-disable-next-line no-unused-vars
-const proficiencyToPercentage = {
-  Beginner: 25,
-  Intermediate: 50,
-  Advanced: 75,
-  Expert: 100,
-};
 
 const ManageSkills = () => {
   const navigateTo = useNavigate();
@@ -53,6 +46,7 @@ const ManageSkills = () => {
   const dispatch = useDispatch();
 
   const [proficiencies, setProficiencies] = useState({});
+  const [deletingSkillId, setDeletingSkillId] = useState(null);
 
   useEffect(() => {
     dispatch(getAllSkills());
@@ -65,6 +59,7 @@ const ManageSkills = () => {
     }
     if (message) {
       toast.success(message);
+      setDeletingSkillId(null);
       dispatch(resetSkillState());
       dispatch(getAllSkills());
     }
@@ -92,6 +87,7 @@ const ManageSkills = () => {
 
   const handleDeleteSkill = (id) => {
     if (id) {
+      setDeletingSkillId(id);
       dispatch(deleteSkill(id));
     } else {
       toast.error("Invalid skill ID.");
@@ -111,46 +107,58 @@ const ManageSkills = () => {
             </CardHeader>
             <CardContent className="grid sm:grid-cols-2 gap-4">
               {skills?.data?.length ? (
-                skills.data.map((element) => (
-                  <Card key={element._id}>
-                    <CardHeader className="text-3xl font-bold flex items-center justify-between flex-row">
-                      {element.title}
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Trash2
-                              onClick={() => handleDeleteSkill(element._id)}
-                              className="h-5 w-5 hover:text-red-500"
-                            />
-                          </TooltipTrigger>
-                          <TooltipContent side="right" style={{ color: "red" }}>
-                            Delete
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </CardHeader>
-                    <CardFooter>
-                      <Label className="text-2xl mr-2">Proficiency:</Label>
-                      <Select
-                        value={proficiencies[element._id] || "Beginner"}
-                        onValueChange={(value) =>
-                          handleSelectChange(element._id, value)
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select proficiency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {proficiencyLevels.map((level) => (
-                            <SelectItem key={level} value={level}>
-                              {level}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </CardFooter>
-                  </Card>
-                ))
+                skills.data.map((element) => {
+                  const isDeleting = deletingSkillId === element._id;
+                  return (
+                    <Card key={element._id}>
+                      <CardHeader className="text-3xl font-bold flex items-center justify-between flex-row">
+                        {element.title}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => handleDeleteSkill(element._id)}
+                                disabled={isDeleting}
+                              >
+                                {isDeleting ? (
+                                  <Loader className="animate-spin h-5 w-5 text-red-500" />
+                                ) : (
+                                  <Trash2 className="h-5 w-5 hover:text-red-500" />
+                                )}
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent
+                              side="right"
+                              style={{ color: "red" }}
+                            >
+                              {isDeleting ? "Deleting..." : "Delete"}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </CardHeader>
+                      <CardFooter>
+                        <Label className="text-2xl mr-2">Proficiency:</Label>
+                        <Select
+                          value={proficiencies[element._id] || "Beginner"}
+                          onValueChange={(value) =>
+                            handleSelectChange(element._id, value)
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select proficiency" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {proficiencyLevels.map((level) => (
+                              <SelectItem key={level} value={level}>
+                                {level}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </CardFooter>
+                    </Card>
+                  );
+                })
               ) : (
                 <div className="text-2xl">You have not added any Skill</div>
               )}

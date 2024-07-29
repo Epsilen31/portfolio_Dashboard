@@ -84,7 +84,7 @@ export const getAllSoftwareApplications = () => async (dispatch) => {
   dispatch(getAllSoftwareApplicationsRequest());
   try {
     const response = await axios.get(
-      "http://localhost:8000/api/v1/softwareApplication/getAll",
+      "https://portfolio-backend-sjmc.onrender.com/api/v1/softwareApplication/getAll",
       { withCredentials: true }
     );
     console.log("data", response.data),
@@ -103,7 +103,7 @@ export const addNewSoftwareApplication = (data) => async (dispatch) => {
   dispatch(addNewSoftwareApplicationRequest());
   try {
     const response = await axios.post(
-      "http://localhost:8000/api/v1/softwareApplication/add",
+      "https://portfolio-backend-sjmc.onrender.com/api/v1/softwareApplication/add",
       data,
       {
         withCredentials: true,
@@ -125,7 +125,7 @@ export const deleteSoftwareApplication = (id) => async (dispatch) => {
   dispatch(deleteSoftwareApplicationRequest());
   try {
     const response = await axios.delete(
-      `http://localhost:8000/api/v1/softwareApplication/delete/${id}`,
+      `https://portfolio-backend-sjmc.onrender.com/api/v1/softwareApplication/delete/${id}`,
       {
         withCredentials: true,
       }

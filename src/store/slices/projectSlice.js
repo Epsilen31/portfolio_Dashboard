@@ -87,15 +87,14 @@ export const getAllProjects = () => async (dispatch) => {
   dispatch(projectSlice.actions.getAllProjectsRequest());
   try {
     const response = await axios.get(
-      "http://localhost:8000/api/v1/project/getAllProject",
+      "https://portfolio-backend-sjmc.onrender.com/api/v1/project/getAllProject",
       { withCredentials: true }
     );
-    console.log(response);
     dispatch(projectSlice.actions.getAllProjectsSuccess(response));
     dispatch(projectSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
-      projectSlice.actions.getAllProjectsFailed(error.response.data.message)
+      projectSlice.actions.getAllProjectsFailed(error?.response?.data?.message)
     );
   }
 };
@@ -104,7 +103,7 @@ export const addNewProject = (data) => async (dispatch) => {
   dispatch(projectSlice.actions.addNewProjectRequest());
   try {
     const response = await axios.post(
-      "http://localhost:8000/api/v1/project/addProject",
+      "https://portfolio-backend-sjmc.onrender.com/api/v1/project/addProject",
       data,
       {
         withCredentials: true,
@@ -124,7 +123,7 @@ export const deleteProject = (id) => async (dispatch) => {
   dispatch(projectSlice.actions.deleteProjectRequest());
   try {
     const response = await axios.delete(
-      `http://localhost:8000/api/v1/project/delete/${id}`,
+      `https://portfolio-backend-sjmc.onrender.com/api/v1/project/delete/${id}`,
       {
         withCredentials: true,
       }
@@ -141,7 +140,7 @@ export const updateProject = (id, newData) => async (dispatch) => {
   dispatch(projectSlice.actions.updateProjectRequest());
   try {
     const response = await axios.put(
-      `http://localhost:8000/api/v1/project/update/${id}`,
+      `https://portfolio-backend-sjmc.onrender.com/api/v1/project/update/${id}`,
       newData,
       {
         withCredentials: true,

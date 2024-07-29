@@ -68,6 +68,7 @@ const Dashboard = () => {
   const { projects, error: projectError } = useSelector(
     (state) => state.projects
   );
+  console.log("projects", projects);
 
   const [appId, setAppId] = useState(null);
 
@@ -117,12 +118,17 @@ const Dashboard = () => {
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               <Card className="flex flex-col sm:col-span-2 justify-between bg-gradient-to-r from-teal-400 to-cyan-500 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
                 <CardHeader className="pb-3">
-                  <CardDescription className="max-w-lg text-balance leading-relaxed">
+                  <CardDescription className="max-w-lg text-black text-base font-bold leading-relaxed">
                     {user.aboutme}
                   </CardDescription>
                 </CardHeader>
                 <CardFooter>
-                  <Button>Visit Portfolio</Button>
+                  <Link
+                    to={"https://epsilen-estate.onrender.com/"}
+                    target="_blank"
+                  >
+                    <Button>Visit Portfolio</Button>
+                  </Link>
                 </CardFooter>
               </Card>
               <Card className="flex flex-col justify-center bg-blue-100">

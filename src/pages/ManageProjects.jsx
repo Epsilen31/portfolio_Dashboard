@@ -21,8 +21,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
-import { Eye, Pen, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { Eye, Pen, Trash2, Loader } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -37,7 +37,10 @@ const ManageProjects = () => {
   );
 
   const dispatch = useDispatch();
+  const [deletingProjectId, setDeletingProjectId] = useState(null);
+
   const handleProjectDelete = (id) => {
+    setDeletingProjectId(id);
     dispatch(deleteProject(id));
   };
 
@@ -48,6 +51,7 @@ const ManageProjects = () => {
     }
     if (message) {
       toast.success(message);
+      setDeletingProjectId(null);
       dispatch(resetProjectSlice());
       dispatch(getAllProjects());
     }
@@ -83,6 +87,7 @@ const ManageProjects = () => {
                   <TableBody>
                     {projects && projects?.data?.data?.length > 0 ? (
                       projects?.data?.data?.map((element) => {
+                        const isDeleting = deletingProjectId === element._id;
                         return (
                           <TableRow className="bg-accent" key={element._id}>
                             <TableCell>
@@ -113,8 +118,8 @@ const ManageProjects = () => {
                                     <Link to={`/view/project/${element._id}`}>
                                       <button
                                         className="border-green-600 border-2 rounded-full h-8 w-8 flex 
-                                      justify-center items-center text-green-600  hover:text-slate-950 
-                                      hover:bg-green-600"
+                                        justify-center items-center text-green-600 hover:text-slate-950 
+                                        hover:bg-green-600"
                                       >
                                         <Eye className="h-5 w-5" />
                                       </button>
@@ -129,7 +134,7 @@ const ManageProjects = () => {
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <Link to={`/update/project/${element._id}`}>
-                                      <button className="border-yellow-400 border-2 rounded-full h-8 w-8 flex justify-center items-center text-yellow-400  hover:text-slate-950 hover:bg-yellow-400">
+                                      <button className="border-yellow-400 border-2 rounded-full h-8 w-8 flex justify-center items-center text-yellow-400 hover:text-slate-950 hover:bg-yellow-400">
                                         <Pen className="h-5 w-5" />
                                       </button>
                                     </Link>
@@ -143,16 +148,21 @@ const ManageProjects = () => {
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <button
-                                      className="border-red-600 border-2 rounded-full h-8 w-8 flex justify-center items-center text-red-600  hover:text-slate-50 hover:bg-red-600"
+                                      className="border-red-600 border-2 rounded-full h-8 w-8 flex justify-center items-center text-red-600 hover:text-slate-50 hover:bg-red-600"
                                       onClick={() =>
                                         handleProjectDelete(element._id)
                                       }
+                                      disabled={isDeleting}
                                     >
-                                      <Trash2 className="h-5 w-5" />
+                                      {isDeleting ? (
+                                        <Loader className="animate-spin h-5 w-5" />
+                                      ) : (
+                                        <Trash2 className="h-5 w-5" />
+                                      )}
                                     </button>
                                   </TooltipTrigger>
                                   <TooltipContent side="bottom">
-                                    Delete
+                                    {isDeleting ? "Deleting..." : "Delete"}
                                   </TooltipContent>
                                 </Tooltip>
                               </TooltipProvider>
