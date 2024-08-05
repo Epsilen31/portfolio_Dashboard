@@ -54,7 +54,7 @@ const Dashboard = () => {
   const gotoManageTimeline = () => navigateTo("/manage/timeline");
   const gotoManageProjects = () => navigateTo("/manage/projects");
 
-  const { user } = useSelector((state) => state.user);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const { skills, error: skillError } = useSelector((state) => state.skills);
   const {
     softwareApplications,
@@ -84,6 +84,12 @@ const Dashboard = () => {
       toast.error(skillError);
       dispatch(clearSkillErrors());
     }
+
+    if (!isAuthenticated) {
+      navigateTo("/login");
+      return;
+    }
+
     if (appError) {
       toast.error(appError);
       dispatch(clearAllSoftwareAppErrors());
@@ -102,6 +108,7 @@ const Dashboard = () => {
       toast.error(timelineError);
       dispatch(clearAllTimelineErrors());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, skillError, appError, projectError, appMessage, timelineError]);
 
   // Transform skills data to ensure proficiency is a string

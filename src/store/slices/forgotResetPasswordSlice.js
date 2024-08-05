@@ -62,7 +62,7 @@ export const forgotPassword = (email) => async (dispatch) => {
   dispatch(forgotPasswordRequest());
   try {
     const { data } = await axios.post(
-      "https://portfolio-backend-sjmc.onrender.com/api/v1/user/password/forgot",
+      "https://portfolio-backend-1mty.onrender.com/api/v1/user/password/forgot",
       { email },
       {
         withCredentials: true,
@@ -88,7 +88,7 @@ export const resetPassword =
     dispatch(resetPasswordRequest());
     try {
       const { data } = await axios.put(
-        `https://portfolio-backend-sjmc.onrender.com/api/v1/user/password/reset/${token}`,
+        `https://portfolio-backend-1mty.onrender.com/api/v1/user/password/reset/${token}`,
         { password, confirmPassword },
         {
           withCredentials: true,

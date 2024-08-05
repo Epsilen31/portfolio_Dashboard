@@ -58,7 +58,7 @@ export const getAllMessages = () => async (dispatch) => {
   dispatch(messageSlice.actions.getAllMessagesRequest());
   try {
     const response = await axios.get(
-      "https://portfolio-backend-sjmc.onrender.com/api/v1/message/getAll",
+      "https://portfolio-backend-1mty.onrender.com/api/v1/message/getAll",
       { withCredentials: true }
     );
     dispatch(messageSlice.actions.getAllMessagesSuccess(response.data));
@@ -74,7 +74,7 @@ export const deleteMessage = (id) => async (dispatch) => {
   dispatch(messageSlice.actions.deleteMessageRequest());
   try {
     const response = await axios.delete(
-      `https://portfolio-backend-sjmc.onrender.com/api/v1/message/delete/${id}`,
+      `https://portfolio-backend-1mty.onrender.com/api/v1/message/delete/${id}`,
       {
         withCredentials: true,
       }

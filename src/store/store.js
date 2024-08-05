@@ -39,6 +39,10 @@ export const store = configureStore({
     skills: persistedSkillReducer,
     projects: persistedProjectReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 // Create a persistor
