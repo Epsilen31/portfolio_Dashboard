@@ -49,12 +49,9 @@ const UpdateProject = () => {
   useEffect(() => {
     const getProject = async () => {
       await axios
-        .get(
-          `https://portfolio-backend-1mty.onrender.com/api/v1/project/getSingleProject/${id}`,
-          {
-            withCredentials: true,
-          }
-        )
+        .get(`http://localhost:8000/api/v1/project/getSingleProject/${id}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           const data = res.data.data;
           setTitle(data.title);

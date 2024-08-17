@@ -20,7 +20,7 @@ const ViewProject = () => {
     const getProject = async () => {
       try {
         const res = await axios.get(
-          `https://portfolio-backend-1mty.onrender.com/api/v1/project/getSingleProject/${id}`,
+          `http://localhost:8000/api/v1/project/getSingleProject/${id}`,
           { withCredentials: true }
         );
         console.log("res", res);

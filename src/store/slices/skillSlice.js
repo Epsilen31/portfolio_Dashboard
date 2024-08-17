@@ -101,7 +101,7 @@ export const getAllSkills = () => async (dispatch) => {
   dispatch(getAllSkillsRequest());
   try {
     const response = await axios.get(
-      "https://portfolio-backend-1mty.onrender.com/api/v1/skills/getAllSkills",
+      "http://localhost:8000/api/v1/skills/getAllSkills",
       { withCredentials: true }
     );
     dispatch(getAllSkillsSuccess(response.data));
@@ -118,7 +118,7 @@ export const addNewSkill = (data) => async (dispatch) => {
   dispatch(addNewSkillRequest());
   try {
     const response = await axios.post(
-      "https://portfolio-backend-1mty.onrender.com/api/v1/skills/addSkill",
+      "http://localhost:8000/api/v1/skills/addSkill",
       data,
       {
         withCredentials: true,
@@ -143,7 +143,7 @@ export const deleteSkill = (id) => async (dispatch) => {
   dispatch(deleteSkillRequest());
   try {
     const response = await axios.delete(
-      `https://portfolio-backend-1mty.onrender.com/api/v1/skills/delete/${id}`,
+      `http://localhost:8000/api/v1/skills/delete/${id}`,
       {
         withCredentials: true,
       }
@@ -163,7 +163,7 @@ export const updateSkill =
     dispatch(updateSkillRequest());
     try {
       const response = await axios.put(
-        `https://portfolio-backend-1mty.onrender.com/api/v1/skills/update/${id}`,
+        `http://localhost:8000/api/v1/skills/update/${id}`,
         { proficiency },
         {
           withCredentials: true,

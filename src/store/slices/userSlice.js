@@ -143,7 +143,7 @@ export const login =
     dispatch(loginRequest());
     try {
       const { data } = await axios.post(
-        "https://portfolio-backend-5wix.onrender.com/api/v1/user/login",
+        "http://localhost:8000/api/v1/user/login",
         { email, password },
         {
           withCredentials: true,
@@ -163,7 +163,7 @@ export const getUser = () => async (dispatch) => {
   dispatch(loadUserRequest());
   try {
     const { data } = await axios.get(
-      "https://portfolio-backend-5wix.onrender.com/api/v1/user/getuser",
+      "http://localhost:8000/api/v1/user/getuser",
       {
         withCredentials: true,
       }
@@ -179,7 +179,7 @@ export const getUser = () => async (dispatch) => {
 export const logoutUser = () => async (dispatch) => {
   try {
     const { data } = await axios.get(
-      "https://portfolio-backend-5wix.onrender.com/api/v1/user/logout",
+      "http://localhost:8000/api/v1/user/logout",
       {
         withCredentials: true,
       }
@@ -200,7 +200,7 @@ export const updatePassword =
     dispatch(updatePasswordRequest());
     try {
       const { data } = await axios.put(
-        "https://portfolio-backend-5wix.onrender.com/api/v1/user/update/password",
+        "http://localhost:8000/api/v1/user/update/password",
         {
           currentPassword,
           newPassword,
@@ -226,7 +226,7 @@ export const updateProfile = (newData) => async (dispatch) => {
   dispatch(updateProfileRequest());
   try {
     const data = await axios.put(
-      "https://portfolio-backend-5wix.onrender.com/api/v1/user/update/profile",
+      "http://localhost:8000/api/v1/user/update/profile",
       newData,
       {
         withCredentials: true,
