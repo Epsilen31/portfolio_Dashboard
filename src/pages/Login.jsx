@@ -37,7 +37,9 @@ const Login = () => {
     if (isAuthenticated) {
       navigate("/");
     }
-  }, [error, isAuthenticated, navigate, dispatch]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, isAuthenticated, dispatch, loading]);
 
   return (
     <div className="w-full lg:grid lg:min-h-[100vh] lg:grid-cols-2 xl:min-h-[100vh]">

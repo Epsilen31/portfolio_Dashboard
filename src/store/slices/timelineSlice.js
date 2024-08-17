@@ -79,7 +79,7 @@ export const getAllTimeline = () => async (dispatch) => {
   dispatch(getAllTimelineRequest());
   try {
     const response = await axios.get(
-      "http://localhost:8000/api/v1/timeline/getAll",
+      "https://portfolio-backend-b5dh.onrender.com/api/v1/timeline/getAll",
       { withCredentials: true }
     );
     console.log(response.data);
@@ -98,7 +98,7 @@ export const deleteTimeline = (id) => async (dispatch) => {
   dispatch(deleteTimelineRequest());
   try {
     const response = await axios.delete(
-      `http://localhost:8000/api/v1/timeline/delete/${id}`,
+      `https://portfolio-backend-b5dh.onrender.com/api/v1/timeline/delete/${id}`,
       {
         withCredentials: true,
       }
@@ -117,7 +117,7 @@ export const addNewTimeline = (timelineData) => async (dispatch) => {
   dispatch(addTimelineRequest());
   try {
     const response = await axios.post(
-      `http://localhost:8000/api/v1/timeline/add`,
+      `https://portfolio-backend-b5dh.onrender.com/api/v1/timeline/add`,
       timelineData,
       {
         withCredentials: true,

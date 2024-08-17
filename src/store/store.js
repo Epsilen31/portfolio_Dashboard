@@ -1,5 +1,7 @@
 // src/store/store.js
 import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // default to localStorage
 import userReducer from "./slices/userSlice";
 import forgotReducer from "./slices/forgotResetPasswordSlice";
 import messageReducer from "./slices/messagesSlice";
@@ -8,10 +10,19 @@ import softwareApplicationSlice from "./slices/softwareApplicationSlice";
 import skillSlice from "./slices/skillSlice";
 import projectSlice from "./slices/projectSlice";
 
+// Redux persist configuration
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["user"], // Only persist the user slice
+};
+
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
+
 // Configure store with persisted reducers
 export const store = configureStore({
   reducer: {
-    user: userReducer,
+    user: persistedUserReducer,
     forgotPassword: forgotReducer,
     messages: messageReducer,
     timeline: timelineReducer,
@@ -24,3 +35,6 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+// Create and export the persistor
+export const persistor = persistStore(store);

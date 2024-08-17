@@ -10,6 +10,7 @@ import {
 } from "@/store/slices/forgotResetPasswordSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { getUser } from "@/store/slices/userSlice";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -35,12 +36,13 @@ const ResetPassword = () => {
     }
     if (message) {
       toast.success(message);
+      dispatch(getUser());
     }
     if (isAuthenticated) {
       navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, error, navigate, message]);
+  }, [dispatch, error, isAuthenticated, loading]);
 
   return (
     <div className="w-full lg:grid lg:min-h-[100vh] lg:grid-cols-2 xl:min-h-[100vh]">

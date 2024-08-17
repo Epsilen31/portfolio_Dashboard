@@ -32,13 +32,14 @@ const ForgotPassword = () => {
       toast.error(error);
       dispatch(clearAllForgotPasswordError());
     }
-    if (message) {
+    if (message !== null) {
       toast.success(message);
     }
     if (isAuthenticated) {
       navigate("/login");
     }
-  }, [dispatch, error, navigate, isAuthenticated, message]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, error, isAuthenticated, loading]);
 
   return (
     <div className="w-full lg:grid lg:min-h-[100vh] lg:grid-cols-2 xl:min-h-[100vh]">

@@ -54,20 +54,33 @@ const Dashboard = () => {
   const gotoManageTimeline = () => navigateTo("/manage/timeline");
   const gotoManageProjects = () => navigateTo("/manage/projects");
 
-  const { user, isAuthenticated } = useSelector((state) => state.user);
-  const { skills, error: skillError } = useSelector((state) => state.skills);
+  const { user } = useSelector((state) => state.user);
+  const {
+    skills,
+    loading: skillLoading,
+    error: skillError,
+    message: skillMessage,
+  } = useSelector((state) => state.skills);
   const {
     softwareApplications,
     loading: appLoading,
     error: appError,
     message: appMessage,
   } = useSelector((state) => state.softwareApplications);
-  const { timeline, error: timelineError } = useSelector(
-    (state) => state.timeline
-  );
-  const { projects, error: projectError } = useSelector(
-    (state) => state.projects
-  );
+
+  const {
+    timeline,
+    loading: timelineLoading,
+    error: timelineError,
+    message: timelineMessage,
+  } = useSelector((state) => state.timeline);
+
+  const {
+    projects,
+    error: projectError,
+    message: projectMessage,
+    loading: projectLoading,
+  } = useSelector((state) => state.projects);
   console.log("projects", projects);
 
   const [appId, setAppId] = useState(null);
@@ -83,11 +96,6 @@ const Dashboard = () => {
     if (skillError) {
       toast.error(skillError);
       dispatch(clearSkillErrors());
-    }
-
-    if (!isAuthenticated) {
-      navigateTo("/login");
-      return;
     }
 
     if (appError) {
@@ -109,7 +117,21 @@ const Dashboard = () => {
       dispatch(clearAllTimelineErrors());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, skillError, appError, projectError, appMessage, timelineError]);
+  }, [
+    dispatch,
+    skillError,
+    skillLoading,
+    skillMessage,
+    appError,
+    appLoading,
+    appMessage,
+    projectError,
+    projectLoading,
+    projectMessage,
+    timelineError,
+    timelineLoading,
+    timelineMessage,
+  ]);
 
   // Transform skills data to ensure proficiency is a string
   const transformedSkills = skills?.data?.map((skill) => ({
