@@ -82,7 +82,7 @@ const Login = () => {
               />
             </div>
             {loading ? (
-              <SpecialLoadingButton content={"Loggin in"} />
+              <SpecialLoadingButton content={"Loading"} />
             ) : (
               <Button type="submit" className="w-full">
                 {loading ? "Logging in..." : "Login"}
