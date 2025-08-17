@@ -89,6 +89,14 @@ const Login = () => {
               </Button>
             )}
           </form>
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <Link to="/register" className="text-primary hover:underline">
+                Create one here
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
       <div className="hidden bg-muted lg:block">

@@ -1,45 +1,47 @@
-import { forgotPassword } from "@/store/slices/forgotResetPasswordSlice";
-import { clearAllForgotPasswordError } from "@/store/slices/forgotResetPasswordSlice";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import SpecialLoadingButton from "./sub-components/SpecialLoadingButton";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Button } from "@/components/ui/button";
+import {
+  forgotPassword,
+  clearAllForgotPasswordError
+} from "@/store/slices/forgotResetPasswordSlice"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import SpecialLoadingButton from "./sub-components/SpecialLoadingButton"
+import { Input } from "../components/ui/input"
+import { Label } from "../components/ui/label"
+import { Button } from "@/components/ui/button"
 
 const ForgotPassword = () => {
   // State to hold the email input
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("")
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   // Extracting necessary state from the Redux store
   const { loading, error, message } = useSelector(
     (state) => state.forgotPassword
-  );
-  const { isAuthenticated } = useSelector((state) => state.user);
-  const navigate = useNavigate();
+  )
+  const { isAuthenticated } = useSelector((state) => state.user)
+  const navigate = useNavigate()
 
   // Handler for form submission
   const handleForgotPassword = async (e) => {
-    e.preventDefault();
-    dispatch(forgotPassword(email));
-  };
+    e.preventDefault()
+    dispatch(forgotPassword(email))
+  }
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
-      dispatch(clearAllForgotPasswordError());
+      toast.error(error)
+      dispatch(clearAllForgotPasswordError())
     }
     if (message !== null) {
-      toast.success(message);
+      toast.success(message)
     }
     if (isAuthenticated) {
-      navigate("/login");
+      navigate("/login")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, error, isAuthenticated, loading]);
+  }, [dispatch, error, isAuthenticated, loading])
 
   return (
     <div className="w-full lg:grid lg:min-h-[100vh] lg:grid-cols-2 xl:min-h-[100vh]">
@@ -86,12 +88,12 @@ const ForgotPassword = () => {
       <div className="hidden bg-muted lg:flex items-center justify-center">
         <img
           src="/forgot.png"
-          alt="Image"
+          alt="Password reset illustration"
           className="h-100 w-100 object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ForgotPassword;
+export default ForgotPassword

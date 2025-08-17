@@ -35,3 +35,145 @@
   color: hsl(222.2, 47%, 11.2%);
   background: transparent;
 }
+
+/* ======================== */
+/* Futuristic UI Enhancements */
+/* ======================== */
+
+/* Page-level futuristic background with subtle grid and aurora glows */
+.dashboard-modern {
+  position: relative;
+  isolation: isolate;
+  /* Scope dark theme variables to the dashboard only */
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+
+  background:
+    radial-gradient(60rem 40rem at -10% -10%, rgba(0, 224, 255, 0.10), transparent 60%),
+    radial-gradient(70rem 45rem at 110% 110%, rgba(124, 77, 255, 0.10), transparent 60%),
+    linear-gradient(135deg, #0b1020 0%, #050913 35%, #020611 100%);
+}
+
+/* Subtle animated grid overlay */
+.dashboard-modern::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(120, 120, 150, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 120, 150, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px;
+  mask-image: radial-gradient(80rem 80rem at 50% 10%, rgba(0,0,0,.6), transparent 70%);
+  animation: gridFloat 30s linear infinite;
+  z-index: -1;
+}
+
+@keyframes gridFloat {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-40px); }
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,0.06),
+    0 10px 30px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(255,255,255,0.02);
+}
+
+/* Neon glow utility */
+.neon-glow {
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.25), 0 0 40px rgba(124, 77, 255, 0.20);
+}
+
+/* Hover lift for interactive surfaces */
+.hover-lift {
+  transition: transform 250ms ease, box-shadow 250ms ease, filter 250ms ease;
+}
+.hover-lift:hover {
+  transform: translateY(-3px) scale(1.01);
+  filter: saturate(1.05);
+}
+
+/* Futuristic gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, #22d3ee 0%, #a78bfa 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Neon button style, compatible with existing Button component by passing className */
+.btn-neon {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(167, 139, 250, 0.12));
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  color: #e5f6ff;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 24px rgba(124, 77, 255, 0.25);
+}
+.btn-neon:hover {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 12px 32px rgba(124, 77, 255, 0.35);
+  border-color: rgba(34, 211, 238, 0.5);
+}
+
+/* Table glass look */
+.glass-table {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.glass-table thead tr {
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.12), rgba(167, 139, 250, 0.12));
+}
+.glass-table th {
+  color: rgba(226, 232, 240, 0.85);
+}
+.glass-table tbody tr {
+  transition: background-color 200ms ease;
+}
+.glass-table tbody tr:hover {
+  background-color: rgba(124, 77, 255, 0.08);
+}
+
+/* Card title subtle glow */
+.title-glow {
+  text-shadow: 0 0 12px rgba(124, 77, 255, 0.45), 0 0 24px rgba(34, 211, 238, 0.25);
+}
+
+/* Metric number emphasis */
+.metric-number {
+  font-variation-settings: "wght" 750;
+  letter-spacing: -0.02em;
+}

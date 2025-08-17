@@ -36,6 +36,26 @@ const userSlice = createSlice({
       state.user = {};
     },
     // eslint-disable-next-line no-unused-vars
+    registerRequest(state, action) {
+      state.loading = true;
+      state.error = null;
+      state.message = null;
+      state.isAuthenticated = false;
+      state.user = {};
+    },
+    registerSuccess(state, action) {
+      state.loading = false;
+      state.error = null;
+      state.isAuthenticated = true;
+      state.user = action.payload;
+    },
+    registerFailed(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+      state.isAuthenticated = false;
+      state.user = {};
+    },
+    // eslint-disable-next-line no-unused-vars
     loadUserRequest(state, action) {
       state.loading = true;
       state.error = null;
@@ -122,6 +142,9 @@ export const {
   loginRequest,
   loginSuccess,
   loginFailed,
+  registerRequest,
+  registerSuccess,
+  registerFailed,
   clearAllError,
   loadUserFailed,
   loadUserSuccess,
@@ -150,14 +173,34 @@ export const login =
           headers: { "Content-Type": "application/json" },
         }
       );
-      dispatch(loadUserSuccess(data.user));
+      dispatch(loginSuccess(data.user));
       dispatch(clearAllError());
     } catch (error) {
       dispatch(
-        loadUserFailed(error.response?.data?.message || "An error occurred")
+        loginFailed(error.response?.data?.message || "An error occurred")
       );
     }
   };
+
+export const register = (userData) => async (dispatch) => {
+  dispatch(registerRequest());
+  try {
+    const { data } = await axios.post(
+      "https://portfolio-backend-b5dh.onrender.com/api/v1/user/register",
+      userData,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    dispatch(registerSuccess(data.user));
+    dispatch(clearAllError());
+  } catch (error) {
+    dispatch(
+      registerFailed(error.response?.data?.message || "An error occurred")
+    );
+  }
+};
 
 export const getUser = () => async (dispatch) => {
   dispatch(loadUserRequest());
@@ -169,10 +212,16 @@ export const getUser = () => async (dispatch) => {
       }
     );
     console.log("userData", data);
-    dispatch(loginSuccess(data.user));
-    dispatch(clearAllError());
+    if (data.success && data.user) {
+      dispatch(loadUserSuccess(data.user));
+      dispatch(clearAllError());
+    } else {
+      dispatch(loadUserFailed("Failed to load user data"));
+    }
   } catch (error) {
-    dispatch(loginFailed(error.response?.data?.message || "An error occurred"));
+    console.log("getUser error:", error.response?.data);
+    // Don't treat this as a login failure, just clear the loading state
+    dispatch(loadUserFailed(null));
   }
 };
 
@@ -242,7 +291,7 @@ export const updateProfile = (newData) => async (dispatch) => {
   }
 };
 
-export const resetProfile = () => async (dispatch) => {
+export const resetProfile = () => (dispatch) => {
   // Implement reset profile logic here
   dispatch(updateProfileResetAfterUpdate());
 };

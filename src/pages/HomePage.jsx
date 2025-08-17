@@ -1,9 +1,9 @@
-import { logoutUser } from "@/store/slices/userSlice";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { clearAllForgotPasswordError } from "@/store/slices/forgotResetPasswordSlice";
+import { logoutUser } from "@/store/slices/userSlice"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { clearAllForgotPasswordError } from "@/store/slices/forgotResetPasswordSlice"
 import {
   FolderGit,
   History,
@@ -14,45 +14,50 @@ import {
   Package2,
   PanelLeft,
   PencilRuler,
-  User,
-} from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+  User
+} from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
-import { Button } from "@/components/ui/button";
-import Dashboard from "./sub-components/Dashboard";
-import AddProject from "./sub-components/AddProject";
-import AddSkill from "./sub-components/AddSkill";
-import AddSoftwareApplications from "./sub-components/AddSoftwareApplications";
-import AddTimeline from "./sub-components/AddTimeline";
-import Messages from "./sub-components/Messages";
-import Account from "./sub-components/Account";
+  TooltipTrigger
+} from "@radix-ui/react-tooltip"
+import { Button } from "@/components/ui/button"
+import Dashboard from "./sub-components/Dashboard"
+import AddProject from "./sub-components/AddProject"
+import AddSkill from "./sub-components/AddSkill"
+import AddSoftwareApplications from "./sub-components/AddSoftwareApplications"
+import AddTimeline from "./sub-components/AddTimeline"
+import Messages from "./sub-components/Messages"
+import Account from "./sub-components/Account"
 
 const HomePage = () => {
-  const [active, setActive] = useState("Dashboard");
-  const dispatch = useDispatch();
-  const { isAuthenticated, user, error } = useSelector((state) => state.user);
+  const [active, setActive] = useState("Dashboard")
+  const dispatch = useDispatch()
+  const { isAuthenticated, user, error } = useSelector((state) => state.user)
 
   const handleLogout = () => {
-    dispatch(logoutUser());
-    toast.success("Logged out successfully!");
-  };
+    dispatch(logoutUser())
+    toast.success("Logged out successfully!")
+  }
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   useEffect(() => {
     if (error) {
-      toast.error(error);
-      dispatch(clearAllForgotPasswordError());
+      toast.error(error)
+      dispatch(clearAllForgotPasswordError())
     }
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate("/login")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }, [isAuthenticated, error])
+
+  // Add loading state check
+  if (!isAuthenticated) {
+    return null // Don't render anything while redirecting
+  }
 
   return (
     <>
@@ -331,26 +336,26 @@ const HomePage = () => {
         {(() => {
           switch (active) {
             case "Dashboard":
-              return <Dashboard />;
+              return <Dashboard />
             case "Add Project":
-              return <AddProject />;
+              return <AddProject />
             case "Add Skill":
-              return <AddSkill />;
+              return <AddSkill />
             case "Add Uses":
-              return <AddSoftwareApplications />;
+              return <AddSoftwareApplications />
             case "Add Timeline":
-              return <AddTimeline />;
+              return <AddTimeline />
             case "Messages":
-              return <Messages />;
+              return <Messages />
             case "Account":
-              return <Account />;
+              return <Account />
             default:
-              return <Dashboard />;
+              return <Dashboard />
           }
         })()}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage
